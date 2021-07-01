@@ -692,6 +692,29 @@ static NSString* const kCLClippingToolRatioTitleFormat = @"titleFormat";
 
 @implementation CLRatioMenuItem
 
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.iconImageContentMode = UIViewContentModeScaleAspectFill;
+        CGFloat W = frame.size.width;
+        
+        _iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, W-20, W-20)];
+        _iconView.clipsToBounds = YES;
+        _iconView.layer.cornerRadius = 5;
+        _iconView.contentMode = self.iconImageContentMode;
+        [self addSubview:_iconView];
+        
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _iconView.bottom + 5, W, 15)];
+        _titleLabel.backgroundColor = [UIColor clearColor];
+        _titleLabel.textColor = [CLImageEditorTheme toolbarTextColor];
+        _titleLabel.font = [CLImageEditorTheme toolbarTextFont];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_titleLabel];
+    }
+    return self;
+}
+
 - (void)setRatio:(CLRatio *)ratio
 {
     if(ratio != _ratio){
