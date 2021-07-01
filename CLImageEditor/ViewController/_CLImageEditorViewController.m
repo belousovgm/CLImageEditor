@@ -79,29 +79,14 @@ static const CGFloat kMenuBarHeight = 80.0f;
 
 #pragma mark- Custom initialization
 
-- (UIBarButtonItem*)createDoneButton
-{
-    UIBarButtonItem *rightBarButtonItem = nil;
-    NSString *doneBtnTitle = [CLImageEditorTheme localizedString:@"CLImageEditor_DoneBtnTitle" withDefault:nil];
-    
-    if(![doneBtnTitle isEqualToString:@"CLImageEditor_DoneBtnTitle"]){
-        rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:doneBtnTitle style:UIBarButtonItemStyleDone target:self action:@selector(pushedFinishBtn:)];
-    }
-    else{
-        rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(pushedFinishBtn:)];
-    }
-    return rightBarButtonItem;
-}
-
 - (void)initNavigationBar
 {
-    self.navigationItem.rightBarButtonItem = [self createDoneButton];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     if(_navigationBar==nil){
         UINavigationItem *navigationItem  = [[UINavigationItem alloc] init];
-        navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(pushedCloseBtn:)];
-        navigationItem.rightBarButtonItem = [self createDoneButton];
+        navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:self.cancelButtonTitle style:UIBarButtonItemStyleDone target:self action:@selector(pushedCloseBtn:)];
+        navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.doneButtonTitle style:UIBarButtonItemStyleDone target:self action:@selector(pushedFinishBtn:)];
         
         CGFloat dy = MIN([UIApplication sharedApplication].statusBarFrame.size.height, [UIApplication sharedApplication].statusBarFrame.size.width);
         
@@ -539,7 +524,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
     for(UIView *sub in _menuView.subviews){ [sub removeFromSuperview]; }
     
     CGFloat x = 0;
-    CGFloat W = 70;
+    CGFloat W = _menuView.width / 3;
     CGFloat H = _menuView.height;
     
     int toolCount = 0;
