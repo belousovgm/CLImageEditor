@@ -22,7 +22,7 @@
         self.iconImageContentMode = UIViewContentModeScaleAspectFill;
         CGFloat W = frame.size.width;
         
-        _iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, W-20, W-20)];
+        _iconView = [[UIImageView alloc] initWithFrame:CGRectMake((W / 2) - 14, 9, 28, 28)];
         _iconView.clipsToBounds = YES;
         _iconView.layer.cornerRadius = 5;
         _iconView.contentMode = self.iconImageContentMode;
